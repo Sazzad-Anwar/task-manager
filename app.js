@@ -4,7 +4,6 @@
 
 const express = require('express');
 const app = express();
-const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
 const db = require('./config/db/db_config');
@@ -14,6 +13,7 @@ const { errorHandler, notFound } = require('./middlewares/middlewares');
 
 app.use(cors());
 if(process.env.NODE_ENV === 'development'){
+    const morgan = require('morgan');
     app.use(morgan('tiny'));
 }
 
