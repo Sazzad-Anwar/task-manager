@@ -13,7 +13,9 @@ const port = process.env.PORT || 8080;
 const { errorHandler, notFound } = require('./middlewares/middlewares');
 
 app.use(cors());
-app.use(morgan('tiny'));
+if(process.env.NODE_ENV === 'development'){
+    app.use(morgan('tiny'));
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
