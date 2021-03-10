@@ -1,39 +1,85 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap');
+
+body {
     margin: 0 !important;
-    /* padding: .5rem; */
     line-height: 1 !important;
     letter-spacing: .1rem !important;
-    background-color: #4F74FF !important;
-    max-height: 100vh !important;
+    background-image: linear-gradient(to bottom, #041955, #452DB4, #AD60D0) !important;
+    background-repeat: no-repeat;
+    background-position: center !important;
+    background-size: cover;
+    min-height: 100vh !important;
+    font-family: 'Akaya Telivigala', cursive !important;
 }
 
+*{
+    font-family: 'Akaya Telivigala', cursive !important;
+}
 
-.appBar .toolbar{
+a{
+    text-decoration:none !important;
+    color: #fff !important;
+}
+
+.bg-color {
+    /* background-image: linear-gradient(to left,#041955, #452DB4, #AD60D0) !important; */
+    background-color: #041955 !important;
+}
+
+.bg-mix-color{
+    background-image: linear-gradient(to bottom, #041955, #452DB4, #AD60D0) !important;
+    color: #fff !important;
+}
+
+.appBar .toolbar {
     background-color: #041955 !important;
     display: flex;
     justify-content: space-between;
     text-align: right;
 }
 
-.icon{
+.pink-btn{
+    background-color: #AD60D0 !important;
+    color: #fff !important;
+}
+
+.custom-input label{
+    font-size: 20px !important;
+    color: #fff !important;
+}
+
+.custom-input input{
+    color: #fff !important;
+    border-bottom: 1px solid #fff !important;
+}
+
+.bottom-nav {
+    background-color: #AD60D0 !important;
+}
+
+.MuiBottomNavigationAction-wrapper .MuiBottomNavigationAction-label.Mui-selected {
+    color: #fff !important;
+}
+
+.icon {
     font-size: 1.7rem !important;
     /* margin: 0 .5rem !important; */
 }
 
-.color-white{
+.color-white {
     color: #ffff;
 }
 
-.intro{
+.intro {
     margin: 2rem 0 !important;
     position: relative;
 }
 
-.task-title{
+.task-title {
     margin: 1rem 0 !important;
 }
 
-.line-through{
+.line-through {
     text-decoration: line-through !important;
 }
 
@@ -42,28 +88,41 @@ body{
     content: "\00a0\00a0";
 }
 
-/* .list-area{
-    max-height: 400px;
-    overflow-y: scroll;
-} */
-
-.list{
-    background-color:#041955;
+.list {
+    background-color: #041955;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     padding: .5rem 1rem;
     border-radius: 7px;
     margin: .5rem 0;
 }
 
-.todo{
-    padding-top: .6rem !important;
+.hidden {
+    display: none !important;
+    transition: all .4s !important;
 }
 
-.section{
-    margin:1rem;
+.show {
+    display: block !important;
+    transition: all .4s !important;
 }
 
-.body{
+.todo {
+    padding: 1.3rem 0 !important;
+}
+
+.card-press {
+    transition: transform .4s;
+}
+
+.card-press:active {
+    transform: scale(.98);
+}
+
+.section {
+    margin: 1rem;
+}
+
+.body {
     position: relative;
 }

@@ -3,6 +3,7 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
+    DialogContentText,
     DialogTitle,
     IconButton,
     TextField,
@@ -19,6 +20,9 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import RestoreIcon from '@material-ui/icons/Restore';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import { nanoid } from 'nanoid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Header from '../Components/Header';
 
 const useStyles = makeStyles({
@@ -35,6 +39,7 @@ const HomeScreen = () => {
     const classes = useStyles();
     const [value, setValue] = useState('');
     const [open, setOpen] = useState(false);
+    const [name, setName] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -42,6 +47,7 @@ const HomeScreen = () => {
 
     useEffect(() => {
         setTodos(todos.sort());
+        setName(localStorage.getItem('username'));
     }, [todos]);
 
     const finished = (id) => {
@@ -82,7 +88,7 @@ const HomeScreen = () => {
             <Header />
             <section className="section">
                 <Typography variant="h4" className="color-white intro" component="h4">
-                    What&apos;s Up
+                    What&apos;s Up {name} !
                 </Typography>
                 <Typography variant="h5" className="color-white task-title mb-0" component="h4">
                     Task List
@@ -97,16 +103,17 @@ const HomeScreen = () => {
                 </Typography>
 
                 {!todos.length ? (
-                    <div className="list">
-                        <Typography
-                            variant="body1"
-                            className="color-white todo"
-                            component="h5"
-                            style={{ paddingBottom: '.5rem', textAlign: 'center' }}
-                        >
-                            No task is set to do
-                        </Typography>
-                    </div>
+                    <Card elevation={20} className="card-press">
+                        <CardContent className="d-flex justify-content-around py-0 px-0 bg-color">
+                            <Typography
+                                variant="body1"
+                                className="color-white todo pb-3"
+                                component="h5"
+                            >
+                                No task is set to do !
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 ) : null}
                 <div className="list-area">
                     {todos &&
@@ -114,40 +121,73 @@ const HomeScreen = () => {
                             .slice()
                             .reverse()
                             .map((todo) => (
-                                <div className="list" key={todo.id}>
-                                    <IconButton
-                                        edge="start"
-                                        onClick={() => finished(todo.id)}
-                                        color="inherit"
-                                        aria-label="menu"
-                                    >
+                                <Card elevation={20} className="mb-3 bg-color card-press">
+                                    <CardContent className="d-flex justify-content-around py-0 px-0">
+                                        <CardActions style={{ position: 'relative' }}>
+                                            <IconButton
+                                                edge="start"
+                                                onClick={() => finished(todo.id)}
+                                                color="inherit"
+                                                aria-label="menu"
+                                                style={{
+                                                    left: todo.isDone ? 0 : 0,
+                                                    maxWidth: 40,
+                                                    position: 'absolute',
+                                                }}
+                                            >
+                                                {todo.isDone ? (
+                                                    <CheckCircleIcon className="color-white" />
+                                                ) : (
+                                                    <RadioButtonUncheckedIcon className="color-white" />
+                                                )}
+                                            </IconButton>
+                                        </CardActions>
+                                        <Typography
+                                            variant="body1"
+                                            className={
+                                                todo.isDone
+                                                    ? 'color-white todo line-through'
+                                                    : 'color-white todo'
+                                            }
+                                            style={{
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                                maxWidth: '20ch',
+                                            }}
+                                            component="h5"
+                                        >
+                                            {todo.task}
+                                        </Typography>
                                         {todo.isDone ? (
-                                            <CheckCircleIcon className="color-white" />
+                                            <CardActions>
+                                                <IconButton
+                                                    edge="start"
+                                                    onClick={() => deleteTask(todo.id)}
+                                                    color="inherit"
+                                                    aria-label="menu"
+                                                    className="deleteButton"
+                                                    style={{ right: -20 }}
+                                                >
+                                                    <DeleteIcon className="color-white deleteButton" />
+                                                </IconButton>
+                                            </CardActions>
                                         ) : (
-                                            <RadioButtonUncheckedIcon className="color-white" />
+                                            <CardActions>
+                                                <IconButton
+                                                    edge="start"
+                                                    onClick={() => deleteTask(todo.id)}
+                                                    color="inherit"
+                                                    aria-label="menu"
+                                                    className="deleteButton"
+                                                    style={{ right: -20 }}
+                                                >
+                                                    {/* <DeleteIcon className="color-white deleteButton" /> */}
+                                                </IconButton>
+                                            </CardActions>
                                         )}
-                                    </IconButton>
-                                    <Typography
-                                        variant="body1"
-                                        className={
-                                            todo.isDone
-                                                ? 'color-white todo line-through'
-                                                : 'color-white todo'
-                                        }
-                                        component="h5"
-                                    >
-                                        {todo.task}
-                                    </Typography>
-                                    <IconButton
-                                        edge="start"
-                                        onClick={() => deleteTask(todo.id)}
-                                        color="inherit"
-                                        aria-label="menu"
-                                        className="deleteButton"
-                                    >
-                                        <DeleteIcon className="color-white deleteButton" />
-                                    </IconButton>
-                                </div>
+                                    </CardContent>
+                                </Card>
                             ))}
                 </div>
                 <div style={{ height: 50 }} />
@@ -156,11 +196,12 @@ const HomeScreen = () => {
             <BottomNavigation
                 value={value}
                 onChange={handleChange}
-                className={`${classes.root} fixed-bottom`}
+                className={`${classes.root} bottom-nav fixed-bottom`}
             >
                 <BottomNavigationAction
                     label="Recents"
                     value="recents"
+                    className="color-white"
                     icon={<RestoreIcon className="color-white" />}
                 />
                 <BottomNavigationAction
@@ -178,6 +219,11 @@ const HomeScreen = () => {
 
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add Your Task</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Get a Checklist for your day in organized !
+                    </DialogContentText>
+                </DialogContent>
                 <DialogContent>
                     <TextField
                         autoFocus
